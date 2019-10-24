@@ -58,6 +58,8 @@ const router = new Router({
     ]),
     layout('/', 'Frontend', [
       route('', 'Home', 'frontend/Home'),
+      route('about', 'About', 'frontend/About'),
+      route('contact', 'Contact', 'frontend/Contact'),
     ]),
     redirect('/'),
   ],

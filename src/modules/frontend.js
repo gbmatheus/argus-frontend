@@ -6,6 +6,8 @@ import {
   mdiMonitorDashboard,
   mdiLogin,
   mdiAccountPlus,
+  mdiInformation,
+  mdiContacts,
 } from '@mdi/js'
 
 const state = {
@@ -13,7 +15,7 @@ const state = {
   items: [
     {
       icon: mdiMonitorCellphone,
-      text: 'Home',
+      text: 'Inicio',
       to: {
         name: 'Home',
       },
@@ -27,9 +29,23 @@ const state = {
     },
     {
       icon: mdiAccountPlus,
-      text: 'Register',
+      text: 'Cadastro',
       to: {
         name: 'Register',
+      },
+    },
+    {
+      icon: mdiInformation,
+      text: 'Sobre',
+      to: {
+        name: 'About',
+      },
+    },
+    {
+      icon: mdiContacts,
+      text: 'Contatos',
+      to: {
+        name: 'Contact',
       },
     },
     {
