@@ -9,7 +9,7 @@
       v-text="mdiVuetify"
     />
 
-    <v-toolbar-title>Frontend</v-toolbar-title>
+    <v-toolbar-title>Argus Acad</v-toolbar-title>
 
     <v-spacer />
 
@@ -18,7 +18,7 @@
         v-for="(item, i) in items"
         :key="i"
         :to="item.to"
-        active-class="grey darken-4 white--text"
+        active-class="red darken-4 white--text"
         class="mx-2"
         exact
         text
