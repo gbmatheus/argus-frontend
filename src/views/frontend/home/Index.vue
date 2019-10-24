@@ -5,7 +5,7 @@
   >
     <page-jumbotron
       :icon="mdiMonitorCellphone"
-      heading="Home"
+      heading="Inicio"
       view="src/views/frontend/home/Index.vue"
     />
   </base-section>

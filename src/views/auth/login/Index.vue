@@ -3,11 +3,18 @@
     id="login"
     fill-height
   >
-    <page-jumbotron
+
+    <!-- <page-jumbotron
       :icon="mdiLogin"
       heading="Login Page"
       view="src/views/auth/login/Index.vue"
+    /> -->
+
+    <page-login
+      heading="Argus Acad"
+      :icon="mdiLogin"
     />
+
   </base-section>
 </template>
 
@@ -21,7 +28,8 @@
     name: 'AuthLogin',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      // PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageLogin: () => import('@/components/PageLogin'),
     },
 
     data: () => ({
