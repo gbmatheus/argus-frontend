@@ -48,7 +48,10 @@ const router = new Router({
     layout('/admin', 'Backend', [
       route('', 'Dashboard', 'backend/Dashboard'),
       route('profile', 'Profile', 'backend/Profile'),
-      route('settings', 'Settings', 'backend/Settings'),
+      route('alunos', 'Alunos', 'backend/Alunos'),
+      route('usuarios', 'Usuarios', 'backend/Usuarios'),
+      route('disciplinas', 'Disciplinas', 'backend/Disciplinas'),
+      route('turmas', 'Turmas', 'backend/Turmas'),
       redirect(''),
     ]),
     layout('/auth', 'Frontend', [
