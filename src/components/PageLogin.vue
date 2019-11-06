@@ -39,6 +39,7 @@
                   name="login"
                   :prepend-inner-icon="icons.mdiAccount"
                   type="text"
+                  color="red darken-4"
                 />
 
                 <v-text-field
@@ -48,6 +49,7 @@
                   name="password"
                   :prepend-inner-icon="icons.mdiLock"
                   type="password"
+                  color="red darken-4"
                 />
               </v-form>
             </v-card-text>
