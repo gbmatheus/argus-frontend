@@ -5,8 +5,12 @@ import {
 
 // Icons
 import {
+  mdiAccount,
   mdiAccountCircle,
+  mdiBookOpenPageVariant,
+  mdiGoogleClassroom,
   mdiMonitorDashboard,
+  mdiSchool,
 } from '@mdi/js'
 
 const state = {
@@ -17,6 +21,34 @@ const state = {
       text: 'Dashboard',
       to: {
         name: 'Dashboard',
+      },
+    },
+    {
+      icon: mdiSchool,
+      text: 'Alunos',
+      to: {
+        name: 'Alunos',
+      },
+    },
+    {
+      icon: mdiAccount,
+      text: 'Usuários',
+      to: {
+        name: 'Usuarios',
+      },
+    },
+    {
+      icon: mdiBookOpenPageVariant,
+      text: 'Disciplinas',
+      to: {
+        name: 'Disciplinas',
+      },
+    },
+    {
+      icon: mdiGoogleClassroom,
+      text: 'Turmas',
+      to: {
+        name: 'Turmas',
       },
     },
     {
