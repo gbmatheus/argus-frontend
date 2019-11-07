@@ -1,7 +1,4 @@
 <template>
-  <v-form
-    v-model="valid"
-  >
     <v-card
       class="mx-auto"
       max-width="800"
@@ -32,7 +29,7 @@
           >
             <v-text-field
               filled
-              v-model="numero"
+              v-model.number="numero"
               :rules="numeroRules"
               label="Nº"
               required
@@ -104,8 +101,8 @@
           >
             <v-text-field
               filled
-              v-model="cep"
-              v-mask="cepMask"
+              v-model.number="cep"
+              v-mask="maskCep"
               :rules="cepRules"
               label="CEP"
               required
@@ -115,20 +112,25 @@
 
       </v-container>
     </v-card>
-  </v-form>
 </template>
 
 <script>
+  import { mask } from 'vue-the-mask'
+
   export default {
     name: 'FormEndereco',
+    directives: {
+      mask,
+    },
     data: () => ({
-      valid: false,
+      // valid: false,
       rua: '',
       numero: '',
       complemento: '',
       bairro: '',
       cidade: '',
       cep: '',
+      maskCep: '##.###-###',
       uf: null,
       //  Regras de validação
       nameRules: [
