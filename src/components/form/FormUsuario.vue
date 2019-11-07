@@ -1,109 +1,111 @@
 <template>
-  <v-form v-model="valid">
-    <v-card
-      class="mx-auto"
-      max-width="800"
-      outlined
-    >
-      <v-card-title class="red darken-4 white--text">
-        Usuário
-      </v-card-title>
+  <v-container>
+    <v-row>
+      <v-col
+        cols="12"
+        sm="8"
+        md="8"
+      >
+        <v-text-field
+          v-model="email"
+          ref="email"
+          :rules="emailRules"
+          label="E-mail"
+          filled
+          outlined
+          required
+        />
+      </v-col>
 
-      <v-container>
-        <v-row>
-          <v-col
-            cols="12"
-            md="8"
-          >
-            <v-text-field
-              filled
-              v-model="email"
-              :rules="emailRules"
-              label="E-mail"
-              required
-            />
-          </v-col>
+      <v-col
+        cols="12"
+        sm="4"
+        md="4"
+      >
+        <v-select
+          v-model="tipo"
+          ref="tipo"
+          :items="tipos"
+          :rules="[v => !!v || 'Tipo é obrigatório']"
+          label="Tipo usuário"
+          filled
+          outlined
+          required
+        ></v-select>
+      </v-col>
 
-          <v-col
-            cols="12"
-            md="4"
-          >
-            <v-select
-              filled
-              v-model="tipo"
-              :items="items"
-              :rules="[v => !!v || 'Item is required']"
-              label="Tipo usuário"
-              required
-            ></v-select>
-          </v-col>
-        </v-row>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+      >
+        <v-text-field
+          v-model="login"
+          ref="login"
+          :rules="nomeRules"
+          label="Login"
+          filled
+          outlined
+          required
+        />
+      </v-col>
 
-        <v-row>
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-text-field
-              filled
-              v-model="login"
-              :rules="nomeRules"
-              label="Login"
-              required
-            />
-          </v-col>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+      >
+        <v-text-field
+          v-model="loginRpt"
+          ref="loginRpt"
+          :rules="nomeRules"
+          label="Confirmar login"
+          filled
+          outlined
+          required
+        />
+      </v-col>
 
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-text-field
-              filled
-              v-model="loginRpt"
-              :rules="nomeRules"
-              label="Confirmar login"
-              required
-            />
-          </v-col>
-        </v-row>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+      >
+        <v-text-field
+          v-model="senha"
+          ref="senha"
+          :rules="nomeRules"
+          label="Senha"
+          filled
+          outlined
+          required
+        />
+      </v-col>
 
-        <v-row>
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-text-field
-              filled
-              v-model="senha"
-              :rules="nomeRules"
-              label="Senha"
-              required
-            />
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <v-text-field
-              filled
-              v-model="senhaRpt"
-              :rules="nomeRules"
-              label="Confirmar senha"
-              required
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
-  </v-form>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+      >
+        <v-text-field
+          v-model="senhaRpt"
+          ref="senhaRpt"
+          :rules="nomeRules"
+          label="Confirmar senha"
+          filled
+          outlined
+          required
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
   export default {
     name: 'FormUsuario',
     data: () => ({
-      valid: false,
+      // valid: false,
       login: '',
       loginRPt: '',
       senha: '',
@@ -120,12 +122,12 @@
         v => /.+@.+/.test(v) || 'E-mail deve ser válido',
       ],
       tipo: null,
-      items: [
-        'Admin',
-        'Direção',
-        'Secretaria',
-        'Pedagogo',
-        'Professor',
+      tipos: [
+        'Adminitrador',
+        'Diretor(a)',
+        'Secretário(a)',
+        'Pedagogo(a)',
+        'Professor(a)',
       ],
     }),
   }
