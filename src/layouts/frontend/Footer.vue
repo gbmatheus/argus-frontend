@@ -6,7 +6,14 @@
     dark
     height="48"
   >
-    Copyright &copy; {{ date }}&nbsp;<strong>Vuetify LLC</strong>
+    Copyright &copy; {{ date }}&nbsp;
+    <strong>
+      <v-btn
+        text
+        href="http://github.com/gbmatheus"
+      >GM
+      </v-btn>
+    </strong>
   </v-footer>
 </template>
 
