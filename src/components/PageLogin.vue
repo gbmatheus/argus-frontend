@@ -33,20 +33,18 @@
             <v-card-text>
               <v-form>
                 <v-text-field
-                  id="login"
+                  v-model="login"
                   filled
                   label="Login"
-                  name="login"
                   :prepend-inner-icon="icons.mdiAccount"
                   type="text"
                   color="red darken-4"
                 />
 
                 <v-text-field
-                  id="password"
+                  v-model="senha"
                   filled
                   label="Password"
-                  name="password"
                   :prepend-inner-icon="icons.mdiLock"
                   type="password"
                   color="red darken-4"
@@ -67,6 +65,7 @@
               <v-btn
                 class="btn-p"
                 color="red darken-4"
+                @click="createPost"
               >
                 <span class="white--text">ENTRAR</span>
               </v-btn>
@@ -80,6 +79,7 @@
 
 <script>
   import { mdiAccount, mdiLock } from '@mdi/js'
+  import Axios from 'axios'
 
   export default {
     name: 'LoginPage',
@@ -94,11 +94,24 @@
       },
     },
     data: () => ({
+      login: '',
+      senha: '',
+      email: 'gabrielma@gmail.com',
+      tipo: 'ADM',
       icons: {
         mdiAccount,
         mdiLock,
       },
     }),
+    methods: {
+      createPost () {
+        Axios.post('http://127.0.0.1:8089/api/usuarios', {
+          login: this.login, senha: this.senha, email: this.email, tipo: this.tipo,
+        })
+          .then((response) => alert('Adicionado ', response))
+          .catch((error) => alert('Erro ', JSON.stringify(error)))
+      },
+    },
   }
 </script>
 
