@@ -9,9 +9,11 @@
         <v-text-field
           v-model="rua"
           ref="rua"
+          :value="endereco.rua"
+          :placeholder="endereco.rua"
           :rules="nomeRules"
           :counter="50"
-          label="Rua"
+          label="Logadouro"
           filled
           outlined
           required
@@ -27,6 +29,8 @@
           v-model.number="numero"
           v-mask="maskNumero"
           ref="numero"
+          :value="endereco.numero"
+          :placeholder="endereco.numero"
           :rules="numeroRules"
           label="Nº"
           filled
@@ -43,6 +47,8 @@
         <v-text-field
           v-model="complemento"
           ref="complmento"
+          :value="endereco.complemento"
+          :placeholder="endereco.complemento"
           :rules="opcionalRules"
           label="Complemento"
           filled
@@ -58,6 +64,8 @@
         <v-text-field
           v-model="bairro"
           ref="bairro"
+          :value="endereco.bairro"
+          :placeholder="endereco.bairro"
           :rules="nomePequenoRules"
           :counter="30"
           label="Bairro"
@@ -75,6 +83,8 @@
         <v-text-field
           v-model="cidade"
           ref="cidade"
+          :value="endereco.cidade"
+          :placeholder="endereco.cidade"
           :rules="nomePequenoRules"
           :counter="30"
           label="Cidade"
@@ -92,6 +102,8 @@
         <v-select
           v-model="uf"
           ref="uf"
+          :value="endereco.uf"
+          :placeholder="endereco.uf"
           :items="ufs"
           :rules="[v => !!v || 'UF é obrigatório']"
           label="UF"
@@ -107,8 +119,10 @@
         md="4"
       >
         <v-text-field
-          v-model.number="cep"
+          v-model="cep"
           v-mask="maskCep"
+          :value="endereco.cep"
+          :placeholder="endereco.cep"
           ref="cep"
           :rules="cepRules"
           label="CEP"
@@ -130,6 +144,9 @@
     directives: {
       mask,
     },
+    props: [
+      'endereco',
+    ],
     data: () => ({
       // valid: false,
       rua: '',
@@ -191,6 +208,11 @@
         'TO',
       ],
     }),
+    methods: {
+      getEndereco () {
+        return ({ rua: this.rua, numero: this.numero, complemento: this.complemento, bairro: this.bairro, cidade: this.cidade, cep: this.cep, uf: this.uf })
+      },
+    },
   }
 </script>
 

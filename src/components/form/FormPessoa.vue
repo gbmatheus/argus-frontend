@@ -7,8 +7,10 @@
         md="7"
       >
         <v-text-field
-          v-model="nome"
           ref="nome"
+          v-model="nome"
+          :value="pessoa.nome"
+          :placeholder="pessoa.nome"
           :rules="nomeRules"
           :counter="50"
           label="Nome"
@@ -24,8 +26,11 @@
         md="3"
       >
         <v-text-field
-          v-model="rg"
           ref="rg"
+          v-model="rg"
+          v-mask="maskRG"
+          :value="pessoa.rg"
+          :placeholder="pessoa.rg"
           :rules="numeroRules"
           label="Registro geral"
           filled
@@ -42,6 +47,8 @@
         <v-select
           v-model="nascionalidade"
           ref="nascionalidade"
+          :value="pessoa.naturalidade"
+          :placeholder="pessoa.naturalidade"
           :items="nascionalidades"
           :rules="[v => !!v || 'Nascionalidade é obrigatório']"
           label="País"
@@ -56,12 +63,16 @@
 
 <script>
   import { mask } from 'vue-the-mask'
+  // import store from '../../store'
 
   export default {
     name: 'FormPessoa',
     directives: {
       mask,
     },
+    props: [
+      'pessoa',
+    ],
     data: () => ({
       // valid: false,
       nome: '',
@@ -329,6 +340,11 @@
       ],
     }
     ),
+    methods: {
+      getPessoa () {
+        return { nome: this.nome, rg: this.rg, nascionalidade: this.nascionalidade }
+      },
+    },
   }
 </script>
 

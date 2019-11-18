@@ -9,6 +9,8 @@
         <v-text-field
           v-model="email"
           ref="email"
+          :value="usuario.email"
+          :placeholder="usuario.email"
           :rules="emailRules"
           label="E-mail"
           filled
@@ -25,13 +27,15 @@
         <v-select
           v-model="tipo"
           ref="tipo"
+          :value="usuario.tipo"
+          :placeholder="usuario.tipo"
           :items="tipos"
           :rules="[v => !!v || 'Tipo é obrigatório']"
           label="Tipo usuário"
           filled
           outlined
           required
-        ></v-select>
+        />
       </v-col>
 
       <v-col
@@ -42,6 +46,8 @@
         <v-text-field
           v-model="login"
           ref="login"
+          :value="usuario.login"
+          :placeholder="usuario.login"
           :rules="nomeRules"
           label="Login"
           filled
@@ -56,8 +62,8 @@
         md="6"
       >
         <v-text-field
-          v-model="loginRpt"
           ref="loginRpt"
+          v-model="loginRpt"
           :rules="nomeRules"
           label="Confirmar login"
           filled
@@ -74,6 +80,8 @@
         <v-text-field
           v-model="senha"
           ref="senha"
+          :value="usuario.senha"
+          :placeholder="usuario.senha"
           :rules="nomeRules"
           label="Senha"
           filled
@@ -88,8 +96,8 @@
         md="6"
       >
         <v-text-field
-          v-model="senhaRpt"
           ref="senhaRpt"
+          v-model="senhaRpt"
           :rules="nomeRules"
           label="Confirmar senha"
           filled
@@ -104,6 +112,9 @@
 <script>
   export default {
     name: 'FormUsuario',
+    props: [
+      'usuario',
+    ],
     data: () => ({
       // valid: false,
       login: '',
@@ -130,6 +141,12 @@
         'Professor(a)',
       ],
     }),
+    methods: {
+      getUsuario () {
+        alert({ login: this.login, senha: this.senha, email: this.email, tipo: this.tipo })
+        return { login: this.login, senha: this.senha, email: this.email, tipo: this.tipo }
+      },
+    },
   }
 </script>
 
