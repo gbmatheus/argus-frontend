@@ -1,12 +1,12 @@
 <template>
   <base-section
-    id="curriculos"
+    id="pedagogia"
     fill-height
   >
     <page-jumbotron
-      :icon="mdiSchool"
-      heading="Alunos"
-      view="src/views/backend/alunos/Index.vue"
+      :icon="mdiFileDocumentBox"
+      heading="Pedagogia"
+      view="src/views/backend/pedagogia/Index.vue"
     />
   </base-section>
 </template>
@@ -14,18 +14,18 @@
 <script>
   // Icons
   import {
-    mdiSchool,
+    mdiFileDocumentBox,
   } from '@mdi/js'
 
   export default {
-    name: 'BackendAlunos',
+    name: 'BackendPedagogia',
 
     components: {
       PageJumbotron: () => import('@/components/PageJumbotron'),
     },
 
     data: () => ({
-      mdiSchool,
+      mdiFileDocumentBox,
     }),
   }
 </script>

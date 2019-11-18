@@ -1,31 +1,26 @@
 <template>
   <base-section
     id="usuarios"
-    fill-height
   >
-    <page-jumbotron
-      :icon="mdiAccount"
-      heading="Usuarios"
-      view="src/views/backend/usuarios/Index.vue"
-    />
+    <page-funcionario />
   </base-section>
 </template>
 
 <script>
   // Icons
   import {
-    mdiAccount,
+    mdiAccountMultiple,
   } from '@mdi/js'
 
   export default {
     name: 'BackendUsuarios',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageFuncionario: () => import('@/components/PageFuncionario'),
     },
 
     data: () => ({
-      mdiAccount,
+      mdiAccountMultiple,
     }),
   }
 </script>

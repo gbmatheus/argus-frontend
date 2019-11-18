@@ -3,10 +3,8 @@
     id="register"
     fill-height
   >
-    <page-jumbotron
-      :icon="mdiAccountPlus"
+    <page-cadastro
       heading="Register Page"
-      view="src/views/auth/register/Index.vue"
     />
   </base-section>
 </template>
@@ -21,7 +19,8 @@
     name: 'AuthRegister',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageCadastro: () => import('@/components/PageCadastro'),
+
     },
 
     data: () => ({
