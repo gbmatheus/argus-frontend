@@ -12,7 +12,7 @@
         />
 
         <v-toolbar-title>
-          Backend
+          Argus Admin
         </v-toolbar-title>
 
         <v-spacer />

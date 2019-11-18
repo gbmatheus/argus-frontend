@@ -14,7 +14,7 @@ export default new Vuetify({
     dark: false,
     themes: {
       light: {
-        primary: colors.indigo.base,
+        primary: colors.red.base,
       },
       dark: {},
     },

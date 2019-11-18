@@ -6,7 +6,7 @@
     >
       <v-icon
         aria-label="Toggle Drawer"
-        v-text="(drawer || $vuetify.breakpoint.smAndDown) ? mdiMenu : mdiClose"
+        v-text="(drawer || $vuetify.breakpoint.smAndDown) ? mdiClose : mdiMenu"
       />
     </v-btn>
 
