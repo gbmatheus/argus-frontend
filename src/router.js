@@ -47,11 +47,15 @@ const router = new Router({
   routes: [
     layout('/admin', 'Backend', [
       route('', 'Dashboard', 'backend/Dashboard'),
+      route('settings', 'Settings', 'backend/Settings'),
       route('profile', 'Profile', 'backend/Profile'),
       route('alunos', 'Alunos', 'backend/Alunos'),
       route('usuarios', 'Usuarios', 'backend/Usuarios'),
       route('disciplinas', 'Disciplinas', 'backend/Disciplinas'),
       route('turmas', 'Turmas', 'backend/Turmas'),
+      route('curriculos', 'Curriculos', 'backend/Curriculos'),
+      route('pedagogia', 'Pedagogia', 'backend/Pedagogia'),
+      route('financeiro', 'Financeiro', 'backend/Financeiro'),
       redirect(''),
     ]),
     layout('/auth', 'Frontend', [
