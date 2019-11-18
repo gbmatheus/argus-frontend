@@ -5,12 +5,15 @@ import {
 
 // Icons
 import {
-  mdiAccount,
+  mdiAccountMultiple,
   mdiAccountCircle,
   mdiBookOpenPageVariant,
   mdiGoogleClassroom,
   mdiMonitorDashboard,
   mdiSchool,
+  mdiFileDocumentBoxMultiple,
+  mdiCurrencyUsd,
+  mdiFileDocumentBox,
 } from '@mdi/js'
 
 const state = {
@@ -31,7 +34,7 @@ const state = {
       },
     },
     {
-      icon: mdiAccount,
+      icon: mdiAccountMultiple,
       text: 'Usuários',
       to: {
         name: 'Usuarios',
@@ -49,6 +52,27 @@ const state = {
       text: 'Turmas',
       to: {
         name: 'Turmas',
+      },
+    },
+    {
+      icon: mdiFileDocumentBoxMultiple,
+      text: 'Curriculos',
+      to: {
+        name: 'Curriculos',
+      },
+    },
+    {
+      icon: mdiFileDocumentBox,
+      text: 'Pedagogia',
+      to: {
+        name: 'Pedagogia',
+      },
+    },
+    {
+      icon: mdiCurrencyUsd,
+      text: 'Financeiro',
+      to: {
+        name: 'Financeiro',
       },
     },
     {
