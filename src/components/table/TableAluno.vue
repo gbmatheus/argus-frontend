@@ -25,7 +25,7 @@
 
         <v-dialog
           v-model="dialog"
-          max-width="800px"
+          max-width="1000px"
         >
           <template v-slot:activator="{ on }">
             <v-btn
@@ -41,10 +41,858 @@
             <v-card-title>
               <span class="headline">{{ formTitle }} {{ title }}</span>
             </v-card-title>
-            <!--
+
             <v-card-text>
               <v-container>
+                <v-subheader class="red darken-4 white--text">Dados do Aluno</v-subheader>
                 <v-row>
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.nome"
+                      :rules="nomeRules"
+                      label="Nome"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    md="3"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.rg"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Registro geral"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-menu
+                      v-model="menu1"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.pessoa.dataNascimento"
+                          label="Nascimento"
+                          readonly
+                          v-on="on"
+                          filled
+                          outlined
+                          dense
+                          required
+                        />
+                      </template>
+                      <v-date-picker
+                        v-model="editedItem.pessoa.dataNascimento"
+                        no-title
+                        locale="pt-br"
+                        @input="menu1 = false"
+                      />
+                    </v-menu>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pessoa.naturalidade"
+                      :items="paises"
+                      :rules="[v => !!v || 'Naturalidade é obrigatório']"
+                      label="País"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.rua"
+                      :rules="nomeRules"
+                      :counter="50"
+                      label="Logadouro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model.number="editedItem.pessoa.endereco.numero"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Nº"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.complemento"
+                      :rules="opcionalRules"
+                      label="Complemento"
+                      filled
+                      outlined
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.bairro"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Bairro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.cidade"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Cidade"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pessoa.endereco.uf"
+                      :items="ufs"
+                      :rules="[v => !!v || 'UF é obrigatório']"
+                      label="UF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.cep"
+                      v-mask="maskCep"
+                      :rules="cepRules"
+                      label="CEP"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-subheader class="red darken-4 white--text">Dados dos Pais</v-subheader>
+
+                <v-divider />
+                <v-subheader>Pai</v-subheader>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.nome"
+                      :rules="nomeRules"
+                      label="Nome"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    md="3"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.rg"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Registro geral"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.pai.dataNascimento"
+                          label="Nascimento"
+                          readonly
+                          v-on="on"
+                          filled
+                          outlined
+                          dense
+                          required
+                        />
+                      </template>
+                      <v-date-picker
+                        v-model="editedItem.pai.dataNascimento"
+                        no-title
+                        locale="pt-br"
+                        @input="menu2 = false"
+                      />
+                    </v-menu>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pai.naturalidade"
+                      :items="paises"
+                      :rules="[v => !!v || 'Naturalidade é obrigatório']"
+                      label="País"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.endereco.rua"
+                      :rules="nomeRules"
+                      :counter="50"
+                      label="Logadouro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model.number="editedItem.pai.endereco.numero"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Nº"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.endereco.complemento"
+                      :rules="opcionalRules"
+                      label="Complemento"
+                      filled
+                      outlined
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.endereco.bairro"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Bairro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.endereco.cidade"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Cidade"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pai.endereco.uf"
+                      :items="ufs"
+                      :rules="[v => !!v || 'UF é obrigatório']"
+                      label="UF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pai.endereco.cep"
+                      v-mask="maskCep"
+                      :rules="cepRules"
+                      label="CEP"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-divider />
+                <v-card-subtitle>Mãe</v-card-subtitle>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.nome"
+                      :rules="nomeRules"
+                      label="Nome"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    md="3"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.rg"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Registro geral"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-menu
+                      v-model="menu3"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.mae.dataNascimento"
+                          label="Nascimento"
+                          readonly
+                          v-on="on"
+                          filled
+                          outlined
+                          dense
+                          required
+                        />
+                      </template>
+                      <v-date-picker
+                        v-model="editedItem.mae.dataNascimento"
+                        no-title
+                        locale="pt-br"
+                        @input="menu3 = false"
+                      />
+                    </v-menu>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.mae.naturalidade"
+                      :items="paises"
+                      :rules="[v => !!v || 'Naturalidade é obrigatório']"
+                      label="País"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.endereco.rua"
+                      :rules="nomeRules"
+                      :counter="50"
+                      label="Logadouro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model.number="editedItem.mae.endereco.numero"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Nº"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.endereco.complemento"
+                      :rules="opcionalRules"
+                      label="Complemento"
+                      filled
+                      outlined
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.endereco.bairro"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Bairro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.endereco.cidade"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Cidade"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.mae.endereco.uf"
+                      :items="ufs"
+                      :rules="[v => !!v || 'UF é obrigatório']"
+                      label="UF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.mae.endereco.cep"
+                      v-mask="maskCep"
+                      :rules="cepRules"
+                      label="CEP"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-subheader class="red darken-4 white--text">Dados do Responsável</v-subheader>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="7"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.cpf"
+                      v-mask="maskCPF"
+                      :rules="numeroRules"
+                      label="CPF"
+                      :counter="14"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                  <h3>Select do responsável - (Aluno, Pai, Mãe, Outros) </h3>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.nome"
+                      :rules="nomeRules"
+                      label="Nome"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    md="3"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.rg"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Registro geral"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-menu
+                      v-model="menu4"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.responsavel.pessoa.dataNascimento"
+                          label="Nascimento"
+                          readonly
+                          v-on="on"
+                          filled
+                          outlined
+                          dense
+                          required
+                        />
+                      </template>
+                      <v-date-picker
+                        v-model="editedItem.responsavel.pessoa.dataNascimento"
+                        no-title
+                        locale="pt-br"
+                        @input="menu4 = false"
+                      />
+                    </v-menu>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.responsavel.pessoa.naturalidade"
+                      :items="paises"
+                      :rules="[v => !!v || 'Naturalidade é obrigatório']"
+                      label="País"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.endereco.rua"
+                      :rules="nomeRules"
+                      :counter="50"
+                      label="Logadouro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model.number="editedItem.responsavel.pessoa.endereco.numero"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Nº"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.endereco.complemento"
+                      :rules="opcionalRules"
+                      label="Complemento"
+                      filled
+                      outlined
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.endereco.bairro"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Bairro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.endereco.cidade"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Cidade"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.responsavel.pessoa.endereco.uf"
+                      :items="ufs"
+                      :rules="[v => !!v || 'UF é obrigatório']"
+                      label="UF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.responsavel.pessoa.endereco.cep"
+                      v-mask="maskCep"
+                      :rules="cepRules"
+                      label="CEP"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+                <!-- <v-row>
                   <v-col
                     cols="12"
                     sm="6"
@@ -95,12 +943,8 @@
                       label="Horas"
                     />
                   </v-col>
-                </v-row>
+                </v-row> -->
               </v-container>
-            </v-card-text> -->
-
-            <v-card-text>
-
             </v-card-text>
 
             <v-card-actions>
@@ -125,7 +969,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-  <template
+    <template
       v-slot:item.action="{ item }"
     >
       <v-icon
@@ -160,6 +1004,7 @@
 
 <script>
   import Axios from 'axios'
+  import { mask } from 'vue-the-mask'
   import { mdiPencil, mdiDelete } from '@mdi/js'
 
   export default {
@@ -167,27 +1012,27 @@
     props: [
       'title',
     ],
-    // components: {
-    //   FormAluno: () => import('../FormAluno'),
-    // },
+    directives: {
+      mask,
+    },
     data: () => ({
       dialog: false,
       icons: {
         mdiPencil,
         mdiDelete,
       },
-      funcionario: null,
+      aluno: null,
       headers: [
         {
           text: 'Nome',
           align: 'left',
           value: 'pessoa.nome',
         },
-        { text: 'CPF', value: 'cpf' },
-        { text: 'Usuário', value: 'usuario.login' },
-        { text: 'E-mail', value: 'usuario.email' },
-        { text: 'Cargo', value: 'usuario.tipo' },
-        { text: 'Horas', value: 'cargaHoraria' },
+        { text: 'RG', value: 'pessoa.rg' },
+        { text: 'Data de Nascimento', value: 'pessoa.dataNascimento' },
+        { text: 'Responsável', value: 'responsavel.pessoa.nome' },
+        { text: 'CPF', value: 'reposavel.cpf' },
+        { text: 'Turma', value: 'a' },
         { text: 'Actions', value: 'action', sortable: false },
       ],
       desserts: [],
@@ -195,12 +1040,12 @@
       editedItem: {
         pessoa: {
           nome: '',
-          dataNascimento: '',
-          naturalidade: '',
+          dataNascimento: new Date().toISOString().substr(0, 10),
+          naturalidade: 'BRA',
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -210,12 +1055,12 @@
         },
         pai: {
           nome: '',
-          dataNascimento: '',
-          naturalidade: '',
+          dataNascimento: new Date().toISOString().substr(0, 10),
+          naturalidade: 'BRA',
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -225,12 +1070,12 @@
         },
         mae: {
           nome: '',
-          dataNascimento: '',
-          naturalidade: '',
+          dataNascimento: new Date().toISOString().substr(0, 10),
+          naturalidade: 'BRA',
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -242,12 +1087,12 @@
           cpf: '',
           pessoa: {
             nome: '',
-            dataNascimento: '',
-            naturalidade: '',
+            dataNascimento: new Date().toISOString().substr(0, 10),
+            naturalidade: 'BRA',
             rg: '',
             endereco: {
               rua: '',
-              numero: 0,
+              numero: null,
               complemento: null,
               bairro: ' ',
               cidade: '',
@@ -265,7 +1110,7 @@
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -280,7 +1125,7 @@
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -295,7 +1140,7 @@
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: null,
             complemento: null,
             bairro: ' ',
             cidade: '',
@@ -312,7 +1157,7 @@
             rg: '',
             endereco: {
               rua: '',
-              numero: 0,
+              numero: null,
               complemento: null,
               bairro: ' ',
               cidade: '',
@@ -322,11 +1167,321 @@
           },
         },
       },
+      menu1: false,
+      menu2: false,
+      menu3: false,
+      menu4: false,
+      maskNumero: '######################',
+      maskData: '##/##/####',
+      maskCPF: '###.###.###-##',
+      maskCep: '##.###-###',
+      nomeRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 50 || 'Deve ter menos de 50 caracteres',
+      ],
+      numeroRules: [
+        v => !!v || 'Obrigatório',
+        // v => /[0-9]/.test(v) || 'Número inválido',
+      ],
+      nomePequenoRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 30 || 'Deve ter menos de 50 caracteres',
+      ],
+      opcionalRules: [
+        v => v.length <= 50 || 'Deve ter menos de 50 caracteres',
+      ],
+      cepRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 10 || 'Deve ter menos de 10 caracteres',
+      ],
+      ufs: [
+        'AC',
+        'AL',
+        'AP',
+        'AM',
+        'BA',
+        'CE',
+        'DF',
+        'ES',
+        'GO',
+        'MA',
+        'MT',
+        'MS',
+        'MG',
+        'PA',
+        'PB',
+        'PR',
+        'PE',
+        'PI',
+        'RJ',
+        'RN',
+        'RS',
+        'RO',
+        'RR',
+        'SC',
+        'SP',
+        'SE',
+        'TO',
+      ],
+      paises: [
+        'ABW',
+        'AFG',
+        'AGO',
+        'AIA',
+        'ALA',
+        'ALB',
+        'AND',
+        'ANT',
+        'ARE',
+        'ARG',
+        'ARM',
+        'ASM',
+        'ATA',
+        'ATF',
+        'ATG',
+        'AUS',
+        'AUT',
+        'AZE',
+        'BDI',
+        'BEL',
+        'BEN',
+        'BFA',
+        'BGD',
+        'BGR',
+        'BHR',
+        'BHS',
+        'BIH',
+        'BLM',
+        'BLR',
+        'BLZ',
+        'BMU',
+        'BOL',
+        'BRA',
+        'BRB',
+        'BRN',
+        'BTN',
+        'BVT',
+        'BWA',
+        'CAF',
+        'CAN',
+        'CCK',
+        'CHE',
+        'CHL',
+        'CHN',
+        'CIV',
+        'CMR',
+        'COD',
+        'COG',
+        'COK',
+        'COL',
+        'COM',
+        'CPV',
+        'CRI',
+        'CUB',
+        'CUW',
+        'CXR',
+        'CYM',
+        'CYP',
+        'CZE',
+        'DEU',
+        'DJI',
+        'DMA',
+        'DNK',
+        'DOM',
+        'DZA',
+        'ECU',
+        'EGY',
+        'ERI',
+        'ESH',
+        'ESP',
+        'EST',
+        'ETH',
+        'FIN',
+        'FJI',
+        'FLK',
+        'FRA',
+        'FRO',
+        'FSM',
+        'GAB',
+        'GBR',
+        'GEO',
+        'GGY',
+        'GHA',
+        'GIB',
+        'GIN',
+        'GLP',
+        'GMB',
+        'GNB',
+        'GNQ',
+        'GRC',
+        'GRD',
+        'GRL',
+        'GTM',
+        'GUF',
+        'GUM',
+        'GUY',
+        'HKG',
+        'HMD',
+        'HND',
+        'HRV',
+        'HTI',
+        'HUN',
+        'IDN',
+        'IMN',
+        'IND',
+        'IOT',
+        'IRL',
+        'IRN',
+        'IRQ',
+        'ISL',
+        'ISR',
+        'ITA',
+        'JAM',
+        'JEY',
+        'JOR',
+        'JPN',
+        'KAZ',
+        'KEN',
+        'KGZ',
+        'KHM',
+        'KIR',
+        'KNA',
+        'KOR',
+        'KWT',
+        'LAO',
+        'LBN',
+        'LBR',
+        'LBY',
+        'LCA',
+        'LIE',
+        'LKA',
+        'LSO',
+        'LTU',
+        'LUX',
+        'LVA',
+        'MAC',
+        'MAF',
+        'MAR',
+        'MCO',
+        'MDA',
+        'MDG',
+        'MDV',
+        'MEX',
+        'MHL',
+        'MKD',
+        'MLI',
+        'MLT',
+        'MMR',
+        'MNE',
+        'MNG',
+        'MNP',
+        'MOZ',
+        'MRT',
+        'MSR',
+        'MTQ',
+        'MUS',
+        'MWI',
+        'MYS',
+        'MYT',
+        'NAM',
+        'NCL',
+        'NER',
+        'NFK',
+        'NGA',
+        'NIC',
+        'NIU',
+        'NLD',
+        'NOR',
+        'NPL',
+        'NRU',
+        'NZL',
+        'OMN',
+        'PAK',
+        'PAN',
+        'PCN',
+        'PER',
+        'PHL',
+        'PLW',
+        'PNG',
+        'POL',
+        'PRI',
+        'PRK',
+        'PRT',
+        'PRY',
+        'PSE',
+        'PSL',
+        'PYF',
+        'QAT',
+        'REU',
+        'ROU',
+        'RUS',
+        'RWA',
+        'SAU',
+        'SDN',
+        'SEN',
+        'SGP',
+        'SGS',
+        'SHN',
+        'SJM',
+        'SLB',
+        'SLE',
+        'SLV',
+        'SMR',
+        'SOM',
+        'SPM',
+        'SRB',
+        'STP',
+        'SUR',
+        'SVK',
+        'SVN',
+        'SWE',
+        'SWZ',
+        'SYC',
+        'SYR',
+        'TCA',
+        'TCD',
+        'TGO',
+        'THA',
+        'TJK',
+        'TKL',
+        'TKM',
+        'TLS',
+        'TON',
+        'TTO',
+        'TUN',
+        'TUR',
+        'TUV',
+        'TWN',
+        'TZA',
+        'UGA',
+        'UKR',
+        'UMI',
+        'URY',
+        'USA',
+        'UZB',
+        'VAT',
+        'VCT',
+        'VEN',
+        'VGB',
+        'VIR',
+        'VNM',
+        'VUT',
+        'WLF',
+        'WSM',
+        'YEM',
+        'ZAF',
+        'ZMB',
+        'ZWE',
+      ],
+
     }),
 
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Novo' : 'Editar'
+      },
+      computedDateFormatted () {
+        return this.formatDate(this.date)
       },
     },
 
@@ -341,88 +1496,39 @@
     },
 
     mounted () {
-      // Axios.get('https://api.github.com/users/gbmatheus/repos')
-      //   .then(response => {
-      //     this.info = response.data
-      //   })
-      Axios.get('http://127.0.0.1:8089/api/funcionarios')
+      Axios.get('http://127.0.0.1:8089/api/alunos')
         .then(response => {
-          alert(JSON.stringify(response.data))
+          console.log(response)
           this.info = response.data
         })
     },
 
     methods: {
-      initialize () {
-        this.desserts = this.info.map(function (data) {
+      async initialize () {
+        console.log('iniciando')
+        this.desserts = await this.info.map(function (data) {
           console.log(data)
           return {
-            // {"id":1,"cpf":"123.123.123-12","pessoa":{"nome":"Lucas Henrique","dataNascimento":"2001-01-10","naturalidade":"BRA","rg":"20010110","ativo":true,"endereco":{"rua":"Rua dos BOBAO","numero":2,"complemento":"","bairro":"Landia","cidade":"Bobonica","uf":"BB","cep":"11.000-000"}},"usuario":{"login":"lucashenri","senha":"12345678","email":"lucasH@mail","tipo":"PRO","ativo":true},"cargaHoraria":40}
-            pessoa: {
-              nome: data.pessoa.nome,
-              dataNascimento: data.pessoa.dataNascimento,
-              naturalidade: data.pessoa.naturalidade,
-              rg: data.pessoa.rg,
-              endereco: {
-                rua: data.pessoa.endereco.rua,
-                numero: data.pessoa.endereco.numero,
-                complemento: data.pessoa.endereco.complemento,
-                bairro: data.pessoa.endereco.bairro,
-                cidade: data.pessoa.endereco.cidade,
-                uf: data.pessoa.endereco.uf,
-                cep: data.pessoa.endereco.cep,
-              },
-            },
-            pai: {
-              nome: '',
-              dataNascimento: '',
-              naturalidade: '',
-              rg: '',
-              endereco: {
-                rua: '',
-                numero: 0,
-                complemento: null,
-                bairro: ' ',
-                cidade: '',
-                uf: '',
-                cep: '',
-              },
-            },
-            mae: {
-              nome: '',
-              dataNascimento: '',
-              naturalidade: '',
-              rg: '',
-              endereco: {
-                rua: '',
-                numero: 0,
-                complemento: null,
-                bairro: ' ',
-                cidade: '',
-                uf: '',
-                cep: '',
-              },
-            },
-            responsavel: {
-              cpf: '',
-              pessoa: {
-                nome: '',
-                dataNascimento: '',
-                naturalidade: '',
-                rg: '',
-                endereco: {
-                  rua: '',
-                  numero: 0,
-                  complemento: null,
-                  bairro: ' ',
-                  cidade: '',
-                  uf: '',
-                  cep: '',
-                },
-              },
-            },
+            pessoa: data.pessoa,
+            pai: data.pai,
+            mae: data.mae,
+            responsavel: data.responsavel,
           }
         })
+      },
+
+      parseDate (date) {
+        if (!date) return null
+
+        const [dia, mes, ano] = date.split('/')
+        console.log(`${ano}-${mes}-${dia}`)
+        return `${ano}-${mes}-${dia}`
+      },
+      formatDate (date) {
+        if (!date) return null
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
       },
 
       editItem (item) {
@@ -444,85 +1550,41 @@
         }, 300)
       },
 
-      save () {
+      async save () {
         if (this.editedIndex > -1) {
           alert('Atualizando')
+          await this.updatePut(this.desserts[this.editedIndex], this.editedIndex)
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
-          this.updatePut(this.desserts[this.editedIndex], this.editedIndex)
         } else {
           alert('Adicionando', JSON.stringify(this.editedItem))
+          await this.createPost()
           this.desserts.push(this.editedItem)
-          this.createPost()
         }
         this.close()
       },
 
       createPost () {
         this.createAluno()
-        alert(this.funcionario)
-        Axios.post('http://127.0.0.1:8089/api/funcionarios', this.funcionario)
+        alert(JSON.stringify(this.aluno))
+        Axios.post('http://127.0.0.1:8089/api/alunos', this.aluno)
           .then((response) => alert(`Adicionado ${JSON.stringify(response)}`))
-          .catch((error) => alert(`Erro ${JSON.stringify(error)} - error: ${error.message} - status: ${error.status}`))
+          .catch((error) => alert(`Erro status: ${error.status} -\n ${JSON.stringify(error)} - error: ${error.message}`))
       },
 
       updatePut (obj, index) {
-        Axios.put(`http://127.0.0.1:8089/api/funcionarios/${index}`, obj)
+        Axios.put(`http://127.0.0.1:8089/api/aluno/${index}`, obj)
           .then((response) => alert(`Adicionado ${JSON.stringify(response)}`))
-          .catch((error) => alert(`Erro ${JSON.stringify(error)} - error: ${error.message} - status: ${error.status}`))
+          .catch((error) => alert(`Erro status: ${error.status} -\n ${JSON.stringify(error)} - error: ${error.message}`))
       },
 
       createAluno () {
-        let pessoa = this.$refs.func.$refs.formPessoa.getPessoa()
-        let pessoaEnd = this.$refs.func.$refs.formEndereco.getEndereco()
-        let pai = this.$refs.func.$refs.formPessoa.getPessoa()
-        let paiEnd = this.$refs.func.$refs.formPessoa.getPessoa()
-        let mae = this.$refs.func.$refs.formPessoa.getPessoa()
-        let maeEnd = this.$refs.func.$refs.formPessoa.getPessoa()
-        let responsavel = this.$refs.func.$refs.formPessoa.getPessoa()
-        let responsavelEnd = this.$refs.func.$refs.formPessoa.getPessoa()
-
-        console.log(responsavel)
-
-        // switch (u.tipo) {
-        //   case 'Adminitrador':
-        //     u.tipo = 'ADM'
-        //     break
-
-        //   case 'Diretor(a)':
-        //     u.tipo = 'DIR'
-        //     break
-
-        //   case 'Secretário(a)':
-        //     u.tipo = 'SEC'
-        //     break
-
-        //   case 'Pedagogo(a)':
-        //     u.tipo = 'PED'
-        //     break
-
-        //   case 'Professor(a)':
-        //     u.tipo = 'PRO'
-        //     break
-        // }
-
         this.aluno = {
-          pessoa: {
-            endereco: pessoaEnd,
-            ...pessoa,
-          },
-          pai: {
-            endereco: paiEnd,
-            ...pai,
-          },
-          mae: {
-            endereco: maeEnd,
-            ...mae,
-          },
-          responsavel: {
-            endereco: responsavelEnd,
-            ...responsavel,
-          },
+          pessoa: this.editedItem.pessoa,
+          pai: this.editedItem.pai,
+          mae: this.editedItem.mae,
+          responsavel: this.editedItem.responsavel,
         }
+        console.log(this.aluno)
       },
     },
   }
