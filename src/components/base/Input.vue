@@ -1,14 +1,15 @@
 <template>
   <v-text-field
-    v-model="input.model"
-    :label="input.label"
-    :hint="input.hint"
-    :placeholder="input.placeholder"
+    v-model="model"
+    :value="value"
+    :label="label"
+    :hint="hint"
+    :placeholder="placeholder"
     outlined
     filled
-    :clearable="input.clearable"
-    :persistent-hint="input.persistentHint"
-    :counter="input.counter!=0 ? input.counter : false"
+    :clearable="clearable"
+    :persistent-hint="persistentHint"
+    :counter="counter!=0 ? counter : false"
     dense
   />
 </template>
@@ -17,34 +18,30 @@
   export default {
     name: 'BaseInput',
     props: {
-      input: {
-        model: {
-          type: Object
-          // required: true,
-        },
-        label: {
-          type: String,
-          required: true
-        },
-        hint: String,
-        placeholder: String,
-        clearable: {
-          type: Boolean,
-          default: false,
-        },
-        persistentHint: Boolean,
-        counter: Number,
+      value: null,
+      label: {
+        type: String,
+        required: true,
       },
+      hint: {
+        type: String,
+        default: null,
+      },
+      placeholder: String,
+      clearable: {
+        type: Boolean,
+        default: false,
+      },
+      persistentHint: Boolean,
+      counter: Number,
     },
     data: () => ({
-      model: this.input.model,
-      label: this.input.label,
-      hint: this.input.hint,
-      placeholder: this.input.placeholder,
-      clearable: this.input.clearable,
-      persistentHint: this.input.persistentHint,
-      counter: this.input.counter
+      model: null,
+
     }),
+    methods: {
+
+    },
   }
 </script>
 
