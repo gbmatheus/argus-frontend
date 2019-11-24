@@ -1,13 +1,8 @@
 <template>
   <base-section
-    id="curriculos"
-    fill-height
+    id="aluno"
   >
-    <page-jumbotron
-      :icon="mdiSchool"
-      heading="Alunos"
-      view="src/views/backend/alunos/Index.vue"
-    />
+    <page-aluno />
   </base-section>
 </template>
 
@@ -21,7 +16,7 @@
     name: 'BackendAlunos',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageAluno: () => import('@/components/PageAluno'),
     },
 
     data: () => ({

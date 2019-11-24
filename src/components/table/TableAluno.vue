@@ -1031,9 +1031,9 @@
         { text: 'RG', value: 'pessoa.rg' },
         { text: 'Data de Nascimento', value: 'pessoa.dataNascimento' },
         { text: 'Responsável', value: 'responsavel.pessoa.nome' },
-        { text: 'CPF', value: 'reposavel.cpf' },
+        { text: 'CPF', value: 'responsavel.cpf' },
         { text: 'Turma', value: 'a' },
-        { text: 'Actions', value: 'action', sortable: false },
+        { text: 'Opções', value: 'action', sortable: false },
       ],
       desserts: [],
       editedIndex: -1,
@@ -1550,14 +1550,14 @@
         }, 300)
       },
 
-      async save () {
+      save () {
         if (this.editedIndex > -1) {
           alert('Atualizando')
-          await this.updatePut(this.desserts[this.editedIndex], this.editedIndex)
+          this.updatePut(this.desserts[this.editedIndex], this.editedIndex)
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
           alert('Adicionando', JSON.stringify(this.editedItem))
-          await this.createPost()
+          this.createPost()
           this.desserts.push(this.editedItem)
         }
         this.close()
