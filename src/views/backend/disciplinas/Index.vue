@@ -1,13 +1,8 @@
 <template>
   <base-section
     id="disciplinas"
-    fill-height
   >
-    <page-jumbotron
-      :icon="mdiBookOpenPageVariant"
-      heading="Disciplinas"
-      view="src/views/backend/disciplinas/Index.vue"
-    />
+    <page-disciplina />
   </base-section>
 </template>
 
@@ -21,7 +16,7 @@
     name: 'BackendDisciplinas',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageDisciplina: () => import('@/components/PageDisciplina'),
     },
 
     data: () => ({
