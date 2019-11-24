@@ -33,9 +33,9 @@
             <v-card-text>
               <v-form>
                 <v-text-field
-                  v-model="login"
+                  v-model="email"
                   filled
-                  label="Login"
+                  label="Email"
                   :prepend-inner-icon="icons.mdiAccount"
                   type="text"
                   color="red darken-4"
@@ -65,9 +65,9 @@
               <v-btn
                 class="btn-p"
                 color="red darken-4"
-                @click="createPost"
+                v-on:click="createPost"
               >
-                <span class="white--text">ENTRAR</span>
+                <span class="white--text">Entrar</span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -79,6 +79,7 @@
 
 <script>
   import { mdiAccount, mdiLock } from '@mdi/js'
+  // import { mapActions } from 'vuex'
   import Axios from 'axios'
 
   export default {
@@ -95,23 +96,54 @@
     },
     data: () => ({
       login: '',
-      senha: '',
-      email: 'gabrielma@gmail.com',
+      senha: '123456',
+      email: 'gabrielmatheus2503@gmail.com',
       tipo: 'ADM',
       icons: {
         mdiAccount,
         mdiLock,
       },
+
     }),
     methods: {
       createPost () {
-        Axios.post('http://127.0.0.1:8089/api/usuarios', {
-          login: this.login, senha: this.senha, email: this.email, tipo: this.tipo,
+        console.log('click')
+        Axios.post('http://127.0.0.1:8089/auth', {
+          email: this.email, password: this.senha,
         })
-          .then((response) => alert('Adicionado ', response))
-          .catch((error) => alert('Erro ', JSON.stringify(error)))
+          .then((response) => {
+            alert('Login ', response)
+            console.log(response, '  ', this.email)
+          })
+          .catch((error) => {
+            console.log(error)
+            alert('Erro ', JSON.stringify(error))
+          })
       },
     },
+    // data () {
+    //   return {
+    //     loading: false,
+    //     message: null,
+    //     user: { email: this.email, password: this.senha },
+    //   }
+    // },
+    // methods: {
+    //   ...mapActions(['attemptLogin']),
+    //   send() {
+    //     const user = this.user
+    //     this.loading = true
+    //     this.message = null
+    //     this.attemptLogin({ ...user })
+    //     .then(() => {
+    //       this.loading = false,
+    //       this.$router.push('/dashboard'),
+    //     }).catch(e => {
+    //       this.message = e.message,
+    //       this.loading = false,
+    //     })
+    //   }
+    // }
   }
 </script>
 
