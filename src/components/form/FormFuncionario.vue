@@ -1,7 +1,7 @@
 <template>
     <v-card
       class="mx-auto"
-      max-width="800"
+      max-width="1000px"
       outlined
     >
       <!-- <v-card-title class="red darken-4 white--text">
@@ -26,6 +26,7 @@
                 :counter="14"
                 filled
                 outlined
+                dense
                 required
               />
             </v-col>
@@ -43,6 +44,7 @@
                 label="Carga horaria"
                 filled
                 outlined
+                dense
                 required
               />
             </v-col>
@@ -91,9 +93,9 @@
   export default {
     name: 'FormFuncionario',
     components: {
-      FormPessoa: () => import('./form/FormPessoa'),
-      FormEndereco: () => import('./form/FormEndereco'),
-      FormUsuario: () => import('./form/FormUsuario'),
+      FormPessoa: () => import('./FormPessoa'),
+      FormEndereco: () => import('./FormEndereco'),
+      FormUsuario: () => import('./FormUsuario'),
     },
     props: [
       'obj',

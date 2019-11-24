@@ -16,13 +16,6 @@
             cols="12"
             md="9"
           >
-            <v-card>
-              <v-container>
-
-                <table-aluno title="Alunos" />
-
-              </v-container>
-            </v-card>
           </v-col>
         </v-row>
 
@@ -36,9 +29,6 @@
   export default {
     name: 'PageCadastro',
 
-    components: {
-      TableAluno: () => import('./table/TableAluno'),
-    },
     props: {
       heading: {
         type: String,

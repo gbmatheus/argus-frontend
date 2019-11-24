@@ -14,6 +14,7 @@
           :rules="nomeRules"
           :counter="50"
           label="Nome"
+          dense
           filled
           outlined
           required
@@ -33,6 +34,7 @@
           :placeholder="pessoa.rg"
           :rules="numeroRules"
           label="Registro geral"
+          dense
           filled
           outlined
           required
@@ -54,6 +56,7 @@
           label="País"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -81,11 +84,11 @@
       nascionalidade: null,
       //  Regras de validação
       nomeRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 50 || 'Name must be less than 10 characters',
+        v => !!v || 'Campo obrigatório',
+        v => v.length <= 50 || 'Nome deve ter menos que 50 caracteres',
       ],
       numeroRules: [
-        v => !!v || 'Name is required',
+        v => !!v || 'Campo obrigatório',
         v => v.length <= 22 || 'Name must be less than 10 characters',
       ],
       nascionalidades: [

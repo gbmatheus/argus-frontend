@@ -16,6 +16,7 @@
           label="Logadouro"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -35,6 +36,7 @@
           label="Nº"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -53,6 +55,7 @@
           label="Complemento"
           filled
           outlined
+          dense
         />
       </v-col>
 
@@ -71,6 +74,7 @@
           label="Bairro"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -90,6 +94,7 @@
           label="Cidade"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -109,6 +114,7 @@
           label="UF"
           filled
           outlined
+          dense
           required
         />
       </v-col>
@@ -128,6 +134,7 @@
           label="CEP"
           filled
           outlined
+          dense
           required
         />
       </v-col>
