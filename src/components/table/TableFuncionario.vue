@@ -25,7 +25,7 @@
 
         <v-dialog
           v-model="dialog"
-          max-width="800px"
+          max-width="1000px"
         >
           <template v-slot:activator="{ on }">
             <v-btn
@@ -41,9 +41,351 @@
             <v-card-title>
               <span class="headline">{{ formTitle }} {{ title }}</span>
             </v-card-title>
-            <!--
+
             <v-card-text>
               <v-container>
+
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="7"
+                  >
+                    <v-text-field
+                      v-model="editedItem.cpf"
+                      v-mask="maskCPF"
+                      label="CPF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="3"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.cargaHoraria"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Carga horária"
+                      :counter="14"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    md="5"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.nome"
+                      :rules="nomeRules"
+                      label="Nome"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    md="3"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.rg"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Registro geral"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-menu
+                      v-model="menu1"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.pessoa.dataNascimento"
+                          label="Nascimento"
+                          readonly
+                          v-on="on"
+                          filled
+                          outlined
+                          dense
+                          required
+                        />
+                      </template>
+                      <v-date-picker
+                        v-model="editedItem.pessoa.dataNascimento"
+                        no-title
+                        locale="pt-br"
+                        @input="menu1 = false"
+                      />
+                    </v-menu>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pessoa.naturalidade"
+                      :items="paises"
+                      :rules="[v => !!v || 'Naturalidade é obrigatório']"
+                      label="País"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="10"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.rua"
+                      :rules="nomeRules"
+                      :counter="50"
+                      label="Logadouro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model.number="editedItem.pessoa.endereco.numero"
+                      v-mask="maskNumero"
+                      :rules="numeroRules"
+                      label="Nº"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="9"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.complemento"
+                      :rules="opcionalRules"
+                      label="Complemento"
+                      filled
+                      outlined
+                      dense
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.bairro"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Bairro"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.cidade"
+                      :rules="nomePequenoRules"
+                      :counter="30"
+                      label="Cidade"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                  >
+                    <v-select
+                      v-model="editedItem.pessoa.endereco.uf"
+                      :items="ufs"
+                      :rules="[v => !!v || 'UF é obrigatório']"
+                      label="UF"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.pessoa.endereco.cep"
+                      v-mask="maskCep"
+                      :rules="cepRules"
+                      label="CEP"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="8"
+                    md="8"
+                  >
+                    <v-text-field
+                      v-model="editedItem.usuario.email"
+                      :rules="emailRules"
+                      label="E-mail"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="4"
+                  >
+                    <v-select
+                      v-model="editedItem.usuario.tipo"
+                      :items="tipos"
+                      :rules="[v => !!v || 'Tipo é obrigatório']"
+                      label="Tipo usuário"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.usuario.login"
+                      :rules="nomeRules"
+                      label="Login"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="loginRpt"
+                      :rules="nomeRules"
+                      label="Confirmar login"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.usuario.senha"
+                      :rules="nomeRules"
+                      label="Senha"
+                      type="password"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="senhaRpt"
+                      :rules="nomeRules"
+                      label="Confirmar senha"
+                      type="password"
+                      filled
+                      outlined
+                      dense
+                      required
+                    />
+                  </v-col>
+                </v-row>
+
+              <!--
                 <v-row>
                   <v-col
                     cols="12"
@@ -95,15 +437,8 @@
                       label="Horas"
                     />
                   </v-col>
-                </v-row>
+                </v-row> -->
               </v-container>
-            </v-card-text> -->
-
-            <v-card-text>
-              <form-funcionario
-                :obj="editedItem"
-                ref="func"
-              />
             </v-card-text>
 
             <v-card-actions>
@@ -163,6 +498,7 @@
 
 <script>
   import Axios from 'axios'
+  import { mask } from 'vue-the-mask'
   import { mdiPencil, mdiDelete } from '@mdi/js'
 
   export default {
@@ -170,8 +506,8 @@
     props: [
       'title',
     ],
-    components: {
-      FormFuncionario: () => import('../FormFuncionario'),
+    directives: {
+      mask,
     },
     data: () => ({
       dialog: false,
@@ -180,6 +516,8 @@
         mdiDelete,
       },
       funcionario: null,
+      loginRpt: '',
+      senhaRpt: '',
       headers: [
         {
           text: 'Nome',
@@ -199,16 +537,16 @@
         cpf: '',
         pessoa: {
           nome: '',
-          dataNascimento: '',
-          naturalidade: '',
+          dataNascimento: new Date().toISOString().substr(0, 10),
+          naturalidade: 'BRA',
           rg: '',
           endereco: {
             rua: '',
-            numero: 0,
+            numero: '',
             complemento: null,
             bairro: ' ',
             cidade: '',
-            uf: '',
+            uf: 'PE',
             cep: '',
           },
         },
@@ -216,7 +554,7 @@
           login: '',
           senha: '',
           email: '',
-          tipo: '',
+          tipo: 'Professor(a)',
         },
         cargaHoraria: 0,
       },
@@ -245,11 +583,328 @@
         },
         cargaHoraria: 0,
       },
+      menu1: false,
+      maskNumero: '######################',
+      maskData: '##/##/####',
+      maskCPF: '###.###.###-##',
+      maskCep: '##.###-###',
+      nomeRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 50 || 'Deve ter menos de 50 caracteres',
+      ],
+      numeroRules: [
+        v => !!v || 'Obrigatório',
+        // v => /[0-9]/.test(v) || 'Número inválido',
+      ],
+      nomePequenoRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 30 || 'Deve ter menos de 50 caracteres',
+      ],
+      opcionalRules: [
+        v => v.length <= 50 || 'Deve ter menos de 50 caracteres',
+      ],
+      cepRules: [
+        v => !!v || 'Obrigatório',
+        v => v.length <= 10 || 'Deve ter menos de 10 caracteres',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail é obrigatório',
+        v => /.+@.+/.test(v) || 'E-mail deve ser válido',
+      ],
+      tipos: [
+        'Adminitrador',
+        'Diretor(a)',
+        'Secretário(a)',
+        'Pedagogo(a)',
+        'Professor(a)',
+      ],
+      ufs: [
+        'AC',
+        'AL',
+        'AP',
+        'AM',
+        'BA',
+        'CE',
+        'DF',
+        'ES',
+        'GO',
+        'MA',
+        'MT',
+        'MS',
+        'MG',
+        'PA',
+        'PB',
+        'PR',
+        'PE',
+        'PI',
+        'RJ',
+        'RN',
+        'RS',
+        'RO',
+        'RR',
+        'SC',
+        'SP',
+        'SE',
+        'TO',
+      ],
+      paises: [
+        'ABW',
+        'AFG',
+        'AGO',
+        'AIA',
+        'ALA',
+        'ALB',
+        'AND',
+        'ANT',
+        'ARE',
+        'ARG',
+        'ARM',
+        'ASM',
+        'ATA',
+        'ATF',
+        'ATG',
+        'AUS',
+        'AUT',
+        'AZE',
+        'BDI',
+        'BEL',
+        'BEN',
+        'BFA',
+        'BGD',
+        'BGR',
+        'BHR',
+        'BHS',
+        'BIH',
+        'BLM',
+        'BLR',
+        'BLZ',
+        'BMU',
+        'BOL',
+        'BRA',
+        'BRB',
+        'BRN',
+        'BTN',
+        'BVT',
+        'BWA',
+        'CAF',
+        'CAN',
+        'CCK',
+        'CHE',
+        'CHL',
+        'CHN',
+        'CIV',
+        'CMR',
+        'COD',
+        'COG',
+        'COK',
+        'COL',
+        'COM',
+        'CPV',
+        'CRI',
+        'CUB',
+        'CUW',
+        'CXR',
+        'CYM',
+        'CYP',
+        'CZE',
+        'DEU',
+        'DJI',
+        'DMA',
+        'DNK',
+        'DOM',
+        'DZA',
+        'ECU',
+        'EGY',
+        'ERI',
+        'ESH',
+        'ESP',
+        'EST',
+        'ETH',
+        'FIN',
+        'FJI',
+        'FLK',
+        'FRA',
+        'FRO',
+        'FSM',
+        'GAB',
+        'GBR',
+        'GEO',
+        'GGY',
+        'GHA',
+        'GIB',
+        'GIN',
+        'GLP',
+        'GMB',
+        'GNB',
+        'GNQ',
+        'GRC',
+        'GRD',
+        'GRL',
+        'GTM',
+        'GUF',
+        'GUM',
+        'GUY',
+        'HKG',
+        'HMD',
+        'HND',
+        'HRV',
+        'HTI',
+        'HUN',
+        'IDN',
+        'IMN',
+        'IND',
+        'IOT',
+        'IRL',
+        'IRN',
+        'IRQ',
+        'ISL',
+        'ISR',
+        'ITA',
+        'JAM',
+        'JEY',
+        'JOR',
+        'JPN',
+        'KAZ',
+        'KEN',
+        'KGZ',
+        'KHM',
+        'KIR',
+        'KNA',
+        'KOR',
+        'KWT',
+        'LAO',
+        'LBN',
+        'LBR',
+        'LBY',
+        'LCA',
+        'LIE',
+        'LKA',
+        'LSO',
+        'LTU',
+        'LUX',
+        'LVA',
+        'MAC',
+        'MAF',
+        'MAR',
+        'MCO',
+        'MDA',
+        'MDG',
+        'MDV',
+        'MEX',
+        'MHL',
+        'MKD',
+        'MLI',
+        'MLT',
+        'MMR',
+        'MNE',
+        'MNG',
+        'MNP',
+        'MOZ',
+        'MRT',
+        'MSR',
+        'MTQ',
+        'MUS',
+        'MWI',
+        'MYS',
+        'MYT',
+        'NAM',
+        'NCL',
+        'NER',
+        'NFK',
+        'NGA',
+        'NIC',
+        'NIU',
+        'NLD',
+        'NOR',
+        'NPL',
+        'NRU',
+        'NZL',
+        'OMN',
+        'PAK',
+        'PAN',
+        'PCN',
+        'PER',
+        'PHL',
+        'PLW',
+        'PNG',
+        'POL',
+        'PRI',
+        'PRK',
+        'PRT',
+        'PRY',
+        'PSE',
+        'PSL',
+        'PYF',
+        'QAT',
+        'REU',
+        'ROU',
+        'RUS',
+        'RWA',
+        'SAU',
+        'SDN',
+        'SEN',
+        'SGP',
+        'SGS',
+        'SHN',
+        'SJM',
+        'SLB',
+        'SLE',
+        'SLV',
+        'SMR',
+        'SOM',
+        'SPM',
+        'SRB',
+        'STP',
+        'SUR',
+        'SVK',
+        'SVN',
+        'SWE',
+        'SWZ',
+        'SYC',
+        'SYR',
+        'TCA',
+        'TCD',
+        'TGO',
+        'THA',
+        'TJK',
+        'TKL',
+        'TKM',
+        'TLS',
+        'TON',
+        'TTO',
+        'TUN',
+        'TUR',
+        'TUV',
+        'TWN',
+        'TZA',
+        'UGA',
+        'UKR',
+        'UMI',
+        'URY',
+        'USA',
+        'UZB',
+        'VAT',
+        'VCT',
+        'VEN',
+        'VGB',
+        'VIR',
+        'VNM',
+        'VUT',
+        'WLF',
+        'WSM',
+        'YEM',
+        'ZAF',
+        'ZMB',
+        'ZWE',
+      ],
     }),
 
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Novo' : 'Editar'
+      },
+      computedDateFormatted () {
+        return this.formatDate(this.date)
       },
     },
 
@@ -282,30 +937,25 @@
           return {
             // {"id":1,"cpf":"123.123.123-12","pessoa":{"nome":"Lucas Henrique","dataNascimento":"2001-01-10","naturalidade":"BRA","rg":"20010110","ativo":true,"endereco":{"rua":"Rua dos BOBAO","numero":2,"complemento":"","bairro":"Landia","cidade":"Bobonica","uf":"BB","cep":"11.000-000"}},"usuario":{"login":"lucashenri","senha":"12345678","email":"lucasH@mail","tipo":"PRO","ativo":true},"cargaHoraria":40}
             cpf: data.cpf,
-            pessoa: {
-              nome: data.pessoa.nome,
-              dataNascimento: data.pessoa.dataNascimento,
-              naturalidade: data.pessoa.naturalidade,
-              rg: data.pessoa.rg,
-              endereco: {
-                rua: data.pessoa.endereco.rua,
-                numero: data.pessoa.endereco.numero,
-                complemento: data.pessoa.endereco.complemento,
-                bairro: data.pessoa.endereco.bairro,
-                cidade: data.pessoa.endereco.cidade,
-                uf: data.pessoa.endereco.uf,
-                cep: data.pessoa.endereco.cep,
-              },
-            },
-            usuario: {
-              login: data.usuario.login,
-              senha: data.usuario.senha,
-              email: data.usuario.email,
-              tipo: data.usuario.tipo,
-            },
+            pessoa: data.pessoa,
+            usuario: data.usuario,
             cargaHoraria: data.cargaHoraria,
           }
         })
+      },
+
+      parseDate (date) {
+        if (!date) return null
+
+        const [dia, mes, ano] = date.split('/')
+        console.log(`${ano}-${mes}-${dia}`)
+        return `${ano}-${mes}-${dia}`
+      },
+      formatDate (date) {
+        if (!date) return null
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
       },
 
       editItem (item) {
@@ -330,17 +980,17 @@
       save () {
         if (this.editedIndex > -1) {
           alert('Atualizando')
+          this.update(this.desserts[this.editedIndex], this.editedIndex)
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
-          this.updatePut(this.desserts[this.editedIndex], this.editedIndex)
         } else {
           alert('Adicionando', JSON.stringify(this.editedItem))
+          this.created()
           this.desserts.push(this.editedItem)
-          this.createPost()
         }
         this.close()
       },
 
-      createPost () {
+      created () {
         this.createFuncionario()
         alert(this.funcionario)
         Axios.post('http://127.0.0.1:8089/api/funcionarios', this.funcionario)
@@ -348,58 +998,38 @@
           .catch((error) => alert(`Erro ${JSON.stringify(error)} - error: ${error.message} - status: ${error.status}`))
       },
 
-      updatePut (obj, index) {
+      update (obj, index) {
         Axios.put(`http://127.0.0.1:8089/api/funcionarios/${index}`, obj)
           .then((response) => alert(`Adicionado ${JSON.stringify(response)}`))
           .catch((error) => alert(`Erro ${JSON.stringify(error)} - error: ${error.message} - status: ${error.status}`))
       },
 
       createFuncionario () {
-        let f = this.$refs.func.getFuncionario()
-        let p = this.$refs.func.$refs.formPessoa.getPessoa()
-        let u = this.$refs.func.$refs.formUsuario.getUsuario()
-        let e = this.$refs.func.$refs.formEndereco.getEndereco()
-        console.log(u)
+        console.log(this.editedItem.usuario.tipo)
 
-        switch (u.tipo) {
+        switch (this.editedItem.usuario.tipo) {
           case 'Adminitrador':
-            u.tipo = 'ADM'
+            this.editedItem.usuario.tipo = 'ADM'
             break
 
           case 'Diretor(a)':
-            u.tipo = 'DIR'
+            this.editedItem.usuario.tipo = 'DIR'
             break
 
           case 'Secretário(a)':
-            u.tipo = 'SEC'
+            this.editedItem.usuario.tipo = 'SEC'
             break
 
           case 'Pedagogo(a)':
-            u.tipo = 'PED'
+            this.editedItem.usuario.tipo = 'PED'
             break
 
           case 'Professor(a)':
-            u.tipo = 'PRO'
+            this.editedItem.usuario.tipo = 'PRO'
             break
         }
 
-        this.funcionario = {
-          cpf: f.cpf,
-          cargaHoraria: f.cargaHoraria,
-          pessoa: {
-            nome: p.nome,
-            dataNascimento: '2001-01-10',
-            rg: p.rg,
-            naturalidade: p.nascionalidade,
-            endereco: e,
-          },
-          usuario: {
-            login: u.login,
-            senha: u.senha,
-            email: u.email,
-            tipo: u.tipo,
-          },
-        }
+        this.funcionario = this.editedItem
       },
     },
   }
