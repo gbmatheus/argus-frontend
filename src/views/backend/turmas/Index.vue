@@ -1,13 +1,8 @@
 <template>
   <base-section
     id="turmas"
-    fill-height
   >
-    <page-jumbotron
-      :icon="mdiGoogleClassroom"
-      heading="Turmas"
-      view="src/views/backend/turmas/Index.vue"
-    />
+    <page-turma />
   </base-section>
 </template>
 
@@ -21,7 +16,7 @@
     name: 'BackendTurmas',
 
     components: {
-      PageJumbotron: () => import('@/components/PageJumbotron'),
+      PageTurma: () => import('@/components/PageTurma'),
     },
 
     data: () => ({
