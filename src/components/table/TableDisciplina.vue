@@ -219,7 +219,7 @@
     mounted () {
       Axios.get('http://127.0.0.1:8089/api/disciplinas')
         .then(response => {
-          alert(JSON.stringify(response.data))
+          // alert(JSON.stringify(response.data))
           this.info = response.data
         })
     },
